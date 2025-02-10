@@ -5,7 +5,6 @@ using TMPro;  // Import TextMesh Pro
 public class UIManager : MonoBehaviour
 {
     public GunSystem gunSystem;  // Reference to the GunSystem
-    public MoneyDisplay moneyDisplay;  // Reference to the MoneyDisplay system
 
     // Buttons for each stat change
     public Button damageIncreaseButton;
@@ -35,27 +34,20 @@ public class UIManager : MonoBehaviour
     private const float maxShootingSpeed = 0.1f; // Time between shots (the lower, the faster)
     private const int maxBullets = 11;
 
-    // Price and price increase percentage for each stat
-    public int initialDamagePrice = 50;
-    public int initialSpeedPrice = 40;
-    public int initialRangePrice = 60;
-    public int initialBulletsPrice = 30;
-    public float priceIncreasePercentage = 0.1f; // 10% increase after each purchase
-
     private void Start()
     {
         // Ensure buttons are hooked up in the inspector
         if (damageIncreaseButton != null)
-            damageIncreaseButton.onClick.AddListener(() => { TryPurchaseUpgrade("Damage"); });
+            damageIncreaseButton.onClick.AddListener(() => { gunSystem.ChangeDamage(damageChangeAmount, maxDamage); UpdatePurchaseText(); });
 
         if (speedIncreaseButton != null)
-            speedIncreaseButton.onClick.AddListener(() => { TryPurchaseUpgrade("Speed"); });
+            speedIncreaseButton.onClick.AddListener(() => { gunSystem.ChangeTimeBetweenShooting(-speedChangeAmount, maxShootingSpeed); UpdatePurchaseText(); });
 
         if (rangeIncreaseButton != null)
-            rangeIncreaseButton.onClick.AddListener(() => { TryPurchaseUpgrade("Range"); });
+            rangeIncreaseButton.onClick.AddListener(() => { gunSystem.ChangeRange(rangeChangeAmount); UpdatePurchaseText(); });
 
         if (bulletsIncreaseButton != null)
-            bulletsIncreaseButton.onClick.AddListener(() => { TryPurchaseUpgrade("Bullets"); });
+            bulletsIncreaseButton.onClick.AddListener(() => { gunSystem.ChangeBulletsPerTap(bulletsChangeAmount, maxBullets); UpdatePurchaseText(); });
 
         if (allowHoldButton != null)
             allowHoldButton.onClick.AddListener(() => { gunSystem.ToggleAllowButtonHold(); UpdatePurchaseText(); });
@@ -75,89 +67,6 @@ public class UIManager : MonoBehaviour
         {
             gunSystem.SetSpread(value);
             // No need to update purchase text for spread since it's free
-        }
-    }
-
-    // Try to purchase an upgrade based on the type
-    private void TryPurchaseUpgrade(string upgradeType)
-    {
-        int price = 0;
-
-        // Determine the price based on the upgrade type
-        switch (upgradeType)
-        {
-            case "Damage":
-                price = GetUpgradePrice("Damage");
-                if (moneyDisplay.money >= price)
-                {
-                    gunSystem.ChangeDamage(damageChangeAmount, maxDamage);
-                    moneyDisplay.SubtractMoney(price);
-                    UpdateUpgradePrice("Damage");
-                }
-                break;
-            case "Speed":
-                price = GetUpgradePrice("Speed");
-                if (moneyDisplay.money >= price)
-                {
-                    gunSystem.ChangeTimeBetweenShooting(-speedChangeAmount, maxShootingSpeed);
-                    moneyDisplay.SubtractMoney(price);
-                    UpdateUpgradePrice("Speed");
-                }
-                break;
-            case "Range":
-                price = GetUpgradePrice("Range");
-                if (moneyDisplay.money >= price)
-                {
-                    gunSystem.ChangeRange(rangeChangeAmount);
-                    moneyDisplay.SubtractMoney(price);
-                    UpdateUpgradePrice("Range");
-                }
-                break;
-            case "Bullets":
-                price = GetUpgradePrice("Bullets");
-                if (moneyDisplay.money >= price)
-                {
-                    // Ensure bullets purchase does NOT reset timeBetweenShooting
-                    gunSystem.ChangeBulletsPerTap(bulletsChangeAmount, maxBullets);
-                    moneyDisplay.SubtractMoney(price);
-                    UpdateUpgradePrice("Bullets");
-                }
-                break;
-        }
-
-        UpdatePurchaseText();  // Update UI to reflect changes
-    }
-
-    // Get the current price for a specific upgrade
-    private int GetUpgradePrice(string upgradeType)
-    {
-        switch (upgradeType)
-        {
-            case "Damage": return initialDamagePrice;
-            case "Speed": return initialSpeedPrice;
-            case "Range": return initialRangePrice;
-            case "Bullets": return initialBulletsPrice;
-            default: return 0;
-        }
-    }
-
-    // Update the price for a specific upgrade by the percentage increase
-    private void UpdateUpgradePrice(string upgradeType)
-    {
-        switch (upgradeType)
-        {
-            case "Damage":
-                initialDamagePrice = (int)(initialDamagePrice * (1 + priceIncreasePercentage));
-                break;
-            case "Speed":
-                initialSpeedPrice = (int)(initialSpeedPrice * (1 + priceIncreasePercentage));
-                break;
-            case "Range":
-                initialRangePrice = (int)(initialRangePrice * (1 + priceIncreasePercentage));
-                break;
-            case "Bullets":
-                initialBulletsPrice = (int)(initialBulletsPrice * (1 + priceIncreasePercentage));
-                break;
         }
     }
 

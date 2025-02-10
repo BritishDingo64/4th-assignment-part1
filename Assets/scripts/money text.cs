@@ -21,18 +21,18 @@ public class MoneyDisplay : MonoBehaviour
     {
         if (moneyDisplayText != null)
         {
-            moneyDisplayText.text = "Money: " + money.ToString();
+            moneyDisplayText.text = money.ToString();
         }
     }
 
-    // Method to add money and update the display
+    // Optional: Method to add money and update the display
     public void AddMoney(int amount)
     {
         money += amount;
         UpdateMoneyDisplay(); // Update the money display after adding money
     }
 
-    // Method to subtract money and update the display
+    // Optional: Method to subtract money and update the display
     public void SubtractMoney(int amount)
     {
         money -= amount;

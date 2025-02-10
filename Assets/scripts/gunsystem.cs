@@ -60,7 +60,6 @@ public class GunSystem : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
-        Invoke("ResetShot", timeBetweenShooting);
 
         for (int i = 0; i < bulletsPerTap; i++)
         {
@@ -96,6 +95,11 @@ public class GunSystem : MonoBehaviour
                 shipRb.AddForce(-attackPoint.forward * recoilForce, ForceMode.Impulse);  // Recoil
             }
 
+            if (i < bulletsPerTap - 1)
+            {
+                float delay = i * timeBetweenShots;
+                Invoke("ResetShot", delay);
+            }
         }
 
         if (audioManager != null)
@@ -104,6 +108,7 @@ public class GunSystem : MonoBehaviour
             audioManager.PlayGunFire();
         }
 
+        Invoke("ResetShot", timeBetweenShooting);
     }
 
     private void ResetShot()
@@ -146,9 +151,6 @@ public class GunSystem : MonoBehaviour
         // Apply cap
         if (bulletsPerTap > maxBullets)
             bulletsPerTap = maxBullets;
-
-        // Prevent timeBetweenShooting from being affected
-        // We will not modify timeBetweenShooting here!
     }
 
     public void ToggleAllowButtonHold()
