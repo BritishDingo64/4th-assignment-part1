@@ -14764,6 +14764,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2159441463157261375, guid: 94aea52e5c4ba804e8e32344968ee021, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5fe483dfddc3133448b16ebd77ae6b4a, type: 2}
     - target: {fileID: 3330071986770636705, guid: 94aea52e5c4ba804e8e32344968ee021, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -14812,6 +14816,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8210913987398984282, guid: 94aea52e5c4ba804e8e32344968ee021, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5fe483dfddc3133448b16ebd77ae6b4a, type: 2}
     - target: {fileID: 8215323785721354531, guid: 94aea52e5c4ba804e8e32344968ee021, type: 3}
       propertyPath: m_TagString
       value: Player
