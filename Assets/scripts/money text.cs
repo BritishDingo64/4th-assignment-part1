@@ -21,7 +21,7 @@ public class MoneyDisplay : MonoBehaviour
     {
         if (moneyDisplayText != null)
         {
-            moneyDisplayText.text = "Money: " + money.ToString();
+            moneyDisplayText.text = "" + money.ToString();
         }
     }
 
