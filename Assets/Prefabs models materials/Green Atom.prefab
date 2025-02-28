@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  partsOnDeath: 5
+  partsOnDeath: 10
 --- !u!65 &7845691487311834164
 BoxCollider:
   m_ObjectHideFlags: 0
